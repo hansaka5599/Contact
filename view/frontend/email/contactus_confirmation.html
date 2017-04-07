@@ -1,0 +1,36 @@
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<!--@subject {{trans "Contact Us Confirmation"}} @-->
+<!--@vars {
+"var data.email":"Sender Email",
+"var data.name":"Sender Name"
+} @-->
+{{template config_path="design/email/header_template"}}
+
+<table>
+    <tr class="email-intro">
+        <td>
+            <p>
+                {{trans "Hi %name," name=$data.first_name}}
+            </p>
+            <p>
+                {{trans "Thank you for your enquiry."}}
+            </p>
+            <p>
+                {{trans "One of our representatives will be in contact shortly."}}
+            </p>
+            <p>
+                {{trans "Kindest Regards,"}}
+                <br />
+                {{trans "The Team at Camera House"}}
+            </p>
+
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}

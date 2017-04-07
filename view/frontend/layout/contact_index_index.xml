@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <move element="page.main.title" destination="contactForm.new"/>
+        <referenceBlock name="breadcrumbs">
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Home</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="label" xsi:type="string">Home</item>
+                    <item name="title" xsi:type="string">Home</item>
+                    <item name="link" xsi:type="string">/</item>
+                </argument>
+            </action>
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Contact Us</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="label" xsi:type="string">Contact Us</item>
+                    <item name="title" xsi:type="string">Contact Us</item>
+                </argument>
+            </action>
+        </referenceBlock>
+        <referenceBlock name="contactForm" remove="true"/>
+        <move element="page.main.title" destination="content" before="-"/>
+
+        <referenceBlock name="content">
+            <block class="CameraHouse\Contact\Block\ContactForm" name="contactForm.new" template="CameraHouse_Contact::form.phtml">
+                <block class="Magento\Cms\Block\Block" name="contact.top.content" >
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">contact_us_top_content</argument>
+                    </arguments>
+                </block>
+                <container name="form.additional.info" label="Form Additional Info"/>
+            </block>
+        </referenceBlock>
+
+        <referenceContainer name="div.sidebar.main">
+            <block class="CameraHouse\Contact\Block\ContactForm" name="contact.left.content" template="CameraHouse_Contact::sidebar_left.phtml"></block>
+        </referenceContainer>
+        <referenceContainer name ="sidebar.additional" remove="true"/>
+    </body>
+</page>

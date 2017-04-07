@@ -1,0 +1,146 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<div class="page-wrapper">
+    <div class="mid-content">
+        <div class="left-content">
+            <?php echo $block->getChildHtml('contact.left.content') ?>
+        </div>
+        <div class="right-content">
+            <div class="form-wrapper">
+                <div class="top-content">
+                    <?php echo $block->getChildHtml('contact.top.content') ?>
+                </div>
+                <form class="form contact"
+                      action="<?php /* @escapeNotVerified */
+                      echo $block->getFormAction(); ?>"
+                      id="contact-form"
+                      method="post"
+                      data-hasrequired="<?php /* @escapeNotVerified */
+                      echo __('* Required Fields') ?>"
+                      data-mage-init='{"validation":{}}'>
+                    <fieldset class="fieldset">
+                        <div class="fieldset fieldset-row">
+                            <div class="field first_name required">
+                                <label class="label" for="full_name"><span><?php /* @escapeNotVerified */
+                                        echo __('First Name') ?></span></label>
+                                <div class="control">
+                                    <input name="first_name" id="first_name" title="<?php /* @escapeNotVerified */
+                                    echo __('First name') ?>" class="input-text" type="text"
+                                           placeholder="<?php /* @escapeNotVerified */
+                                           echo __('e.g. Stephanie') ?>" data-validate="{required:true}"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fieldset fieldset-row">
+                            <div class="field last_name required">
+                                <label class="label" for="last_name"><span><?php /* @escapeNotVerified */
+                                        echo __('Last Name') ?></span></label>
+                                <div class="control">
+                                    <input name="last_name" id="last_name" title="<?php /* @escapeNotVerified */
+                                    echo __('Last name') ?>" class="input-text" type="text"
+                                           placeholder="<?php /* @escapeNotVerified */
+                                           echo __('e.g. Smith') ?>" data-validate="{required:true}"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fieldset fieldset-row">
+                            <div class="field email required">
+                                <label class="label" for="email"><span><?php /* @escapeNotVerified */
+                                        echo __('Email') ?></span></label>
+                                <div class="control">
+                                    <input name="email" id="email" title="<?php /* @escapeNotVerified */
+                                    echo __('Email') ?>" class="input-text" type="email"
+                                           placeholder="<?php /* @escapeNotVerified */
+                                           echo __('e.g. stephanie.smith@email.com') ?>"
+                                           data-validate="{required:true, 'validate-email':true}"/>
+                                </div>
+                            </div>
+                            <div class="field telephone">
+                                <label class="label" for="telephone"><span><?php /* @escapeNotVerified */
+                                        echo __('Phone Number (optional)') ?></span></label>
+                                <div class="control">
+                                    <input name="telephone" id="telephone" title="<?php /* @escapeNotVerified */
+                                    echo __('Phone Number') ?>" class="input-text" type="text"
+                                           placeholder="<?php /* @escapeNotVerified */
+                                           echo __('e.g. 0400 123 456') ?>"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fieldset fieldset-row wide">
+                            <div class="field store required">
+                                <label class="label" for="topic"><span><?php /* @escapeNotVerified */ echo __('Selected Store (required)') ?></span></label>
+                                <div class="control">
+
+
+                                    <?php echo $this->getLayout()->createBlock('CameraHouse\StoreLocator\Block\Stores\SelectStore')->setTemplate('selectStore.phtml')->toHtml(); ?>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fieldset fieldset-row wide">
+                            <div class="field topic">
+                                <label class="label" for="topic"><span><?php /* @escapeNotVerified */ //echo __('Subject') ?></span></label>
+                                <div class="control">
+                                    <select name="topic" id="topic" title="<?php /* @escapeNotVerified */ echo __('Subject') ?>" class="input-select">
+                                        <?php $topics = $block->getTopics() ?>
+                                        <?php if (is_array($topics)): ?>
+                                            <?php foreach ($topics as $topic): ?>
+                                                <option value="<?php /* @escapeNotVerified */ echo $topic ?>"><?php /* @escapeNotVerified */ echo $topic ?></option>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fieldset fieldset-row wide">
+                            <div class="field comment required">
+                                <label class="label" for="comment"><span><?php /* @escapeNotVerified */
+                                        echo __('Message') ?></span></label>
+                                <div class="control">
+                                    <textarea name="comment" id="comment" title="<?php /* @escapeNotVerified */
+                                    echo __('Message') ?>" class="input-text" cols="5" rows="3"
+                                              data-validate="{required:true}"
+                                              placeholder="<?php /* @escapeNotVerified */
+                                              echo __('Write your message ...') ?>"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="actions-toolbar">
+                        <div class="actions">
+                            <input type="hidden" name="store_locator_id" id="store_locator_id" value=""/>
+                            <input type="hidden" name="hideit" id="hideit" value=""/>
+                            <button type="submit" title="<?php /* @escapeNotVerified */
+                            echo __('Send My Message') ?>" class="action submit primary-xsmall">
+                                <span><?php /* @escapeNotVerified */
+                                    echo __('Submit') ?></span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    require([
+        'jquery',
+        'CameraHouse_StoreLocator/js/selectStore-stores',
+        'Magento_Ui/js/modal/modal',
+        'gMapsJs'
+    ], function ($, stores, modal) {
+        "use strict";
+        localStorage.setItem('storeData_favorite', JSON.stringify(<?php echo json_encode($block->getUserStore()) ?>));
+        $('body').trigger('setSelectedStoreEvent');
+    });
+</script>
